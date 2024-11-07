@@ -1,9 +1,96 @@
-import React, { FC } from "react";
+// import React, { FC } from "react";
+
+// const Star: FC = () => {
+//   return (<>
+//     Star
+//   </>)
+// }
+
+// export default Star;
+
+
+import React, { FC, useState } from 'react'
+// import { useTitle } from 'ahooks'
+import { Typography, Empty, Spin } from 'antd'
+import QuestionCard from '../../components/QuestionCard'
+import ListSearch from '../../components/ListSearch'
+// import ListPage from '../../components/ListPage'
+// import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
+import styles from './common.module.scss'
+
+const { Title } = Typography
+
+const rawquestionList = [
+  {
+    id: "q1",
+    title: "问卷1",
+    isPublished: false,
+    isStar: false,
+    answerCount: 3,
+    createAt: "3月11日 12:23",
+  },
+  {
+    id: "q2",
+    title: "问卷2",
+    isPublished: true,
+    isStar: false,
+    answerCount: 4,
+    createAt: "3月1日 18:03",
+  },
+  {
+    id: "q3",
+    title: "问卷3",
+    isPublished: false,
+    isStar: false,
+    answerCount: 38,
+    createAt: "3月13日 14:23",
+  },
+  {
+    id: "q4",
+    title: "问卷4",
+    isPublished: true,
+    isStar: false,
+    answerCount: 89,
+    createAt: "3月21日 12:23",
+  },
+];
 
 const Star: FC = () => {
-  return (<>
-    Star
-  </>)
+  // useTitle('小慕问卷 - 星标问卷')
+
+  // const { data = {}, loading } = useLoadQuestionListData({ isStar: true })
+  // const { list = [], total = 0 } = data
+  const [list, setList] = useState(rawquestionList) // 全部的列表数据，上划加载更多，累计
+  
+  return (
+    <>
+      <div className={styles.header}>
+        <div className={styles.left}>
+          <Title level={3}>星标问卷</Title>
+        </div>
+        <div className={styles.right}>
+          <ListSearch />
+        </div>
+      </div>
+      <div className={styles.content}>
+        {/* {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin />
+          </div>
+        )}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />} */}
+        {list.length > 0 &&
+          list.map((q: any) => {
+            const { _id } = q
+            return <QuestionCard key={_id} {...q} />
+          })}
+      </div>
+      <div className={styles.footer}>
+        {/* <ListPage total={total} /> */}
+      </div>
+    </>
+  )
 }
 
-export default Star;
+export default Star
+
