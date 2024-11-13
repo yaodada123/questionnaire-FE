@@ -1,26 +1,26 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { Button, Space, Divider, message } from 'antd'
 import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons'
 // import { useRequest } from 'ahooks'
-// import { createQuestionService } from '../services/question'
+import { createQuestionService } from '../services/question'
 import styles from './ManageLayout.module.scss'
 
 const ManageLayout: FC = () => {
   const nav = useNavigate()
   const { pathname } = useLocation()
 
-  // const [loading, setLoading] = useState(false)
-  // async function handleCreateClick() {
-  //   setLoading(true)
-  //   const data = await createQuestionService()
-  //   const { id } = data || {}
-  //   if (id) {
-  //     nav(`/question/edit/${id}`)
-  //     message.success('创建成功')
-  //   }
-  //   setLoading(false)
-  // }
+  const [loading, setLoading] = useState(false)
+  async function handleCreateClick() {
+    setLoading(true)
+    const data = await createQuestionService()
+    const { id } = data || {}
+    if (id) {
+      nav(`/question/edit/${id}`)
+      message.success('创建成功')
+    }
+    setLoading(false)
+  }
 
   // const {
   //   loading,
@@ -42,8 +42,8 @@ const ManageLayout: FC = () => {
             type="primary"
             size="large"
             icon={<PlusOutlined />}
-            // onClick={handleCreateClick}
-            // disabled={loading}
+            onClick={handleCreateClick}
+            disabled={loading}
           >
             新建问卷
           </Button>

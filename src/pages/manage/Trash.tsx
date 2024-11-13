@@ -1,15 +1,5 @@
-// import React, { FC } from "react";
-
-// const Trash: FC = () => {
-//   return (<>
-//     Trash
-//   </>)
-// }
-
-// export default Trash;
-
 import React, { FC, useState } from "react";
-// import { useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import {
   Typography,
   Empty,
@@ -22,10 +12,10 @@ import {
   message,
 } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-// import { useRequest } from 'ahooks'
+import { useRequest } from 'ahooks'
 import ListSearch from "../../components/ListSearch";
 // import ListPage from '../../components/ListPage'
-// import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
+import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 // import { updateQuestionService, deleteQuestionsService } from '../../services/question'
 import styles from "./common.module.scss";
 
@@ -66,11 +56,12 @@ const rawquestionList = [
   },
 ];
 const Trash: FC = () => {
-  // useTitle('小慕问卷 - 回收站')
+  useTitle('小慕问卷 - 回收站')
 
-  // const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
-  // const { list = [], total = 0 } = data
-  const [list, setList] = useState(rawquestionList); // 全部的列表数据，上划加载更多，累计
+  const { data = {}, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
+  const { list = [], total = 0 } = data
+  
+  // const [list, setList] = useState(rawquestionList); // 全部的列表数据，上划加载更多，累计
 
   // 记录选中的 id
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -164,8 +155,8 @@ const Trash: FC = () => {
           dataSource={list}
           columns={tableColumns}
           pagination={false}
-          // rowKey={(q) => q._id}
-          rowKey={(q) => q.id}
+          rowKey={(q: any) => q._id}
+          // rowKey={(q) => q.id}
           rowSelection={{
             type: "checkbox",
             onChange: (selectedRowKeys) => {
@@ -188,12 +179,12 @@ const Trash: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {/* {loading && (
+        {loading && (
           <div style={{ textAlign: "center" }}>
             <Spin />
           </div>
         )}
-        {!loading && list.length === 0 && <Empty description="暂无数据" />} */}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 && TableElem}
       </div>
       <div className={styles.footer}>{/* <ListPage total={total} /> */}</div>

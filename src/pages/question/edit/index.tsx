@@ -1,20 +1,23 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getQuestionService } from "../../../services/question";
 
 const Edit: FC = () => {
   const { id = "" } = useParams();
-  console.log(id, "id_");
-  
-  const _id = "10";
+  const [loading, setLoading] = useState(false);
+  const [questionData, setQuestionData] = useState({});
   useEffect(() => {
     async function fn() {
+      setLoading(true)
       const data = await getQuestionService(id);
-      console.log(data);
+      setQuestionData(data);
+      setLoading(false);
     }
     fn();
   }, []);
-  return <>Edit </>;
+  return <>Edit 
+    {loading ? "loading.,," : JSON.stringify(questionData)}
+  </>;
 };
 
 export default Edit;

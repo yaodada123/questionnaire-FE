@@ -1,21 +1,10 @@
-// import React, { FC } from "react";
-
-// const Star: FC = () => {
-//   return (<>
-//     Star
-//   </>)
-// }
-
-// export default Star;
-
-
 import React, { FC, useState } from 'react'
-// import { useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { Typography, Empty, Spin } from 'antd'
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
 // import ListPage from '../../components/ListPage'
-// import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
+import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 import styles from './common.module.scss'
 
 const { Title } = Typography
@@ -56,11 +45,11 @@ const rawquestionList = [
 ];
 
 const Star: FC = () => {
-  // useTitle('小慕问卷 - 星标问卷')
+  useTitle('小慕问卷 - 星标问卷')
 
-  // const { data = {}, loading } = useLoadQuestionListData({ isStar: true })
-  // const { list = [], total = 0 } = data
-  const [list, setList] = useState(rawquestionList) // 全部的列表数据，上划加载更多，累计
+  const { data = {}, loading } = useLoadQuestionListData({ isStar: true })
+  const { list = [], total = 0 } = data
+  // const [list, setList] = useState(rawquestionList) // 全部的列表数据，上划加载更多，累计
   
   return (
     <>
@@ -73,12 +62,12 @@ const Star: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {/* {loading && (
+        {loading && (
           <div style={{ textAlign: 'center' }}>
             <Spin />
           </div>
         )}
-        {!loading && list.length === 0 && <Empty description="暂无数据" />} */}
+        {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 &&
           list.map((q: any) => {
             const { _id } = q
