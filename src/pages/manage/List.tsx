@@ -138,6 +138,81 @@ const List: FC = () => {
   //   return <span>开始加载下一页</span>
   // }, [started, loading, haveMoreData])
 
+  const [list, setList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  const targetRef = useRef<HTMLDivElement>(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  let haveMoreData = total > list.length;
+  let searchParam = searchParams.get(LIST_SEARCH_PARAM_KEY) || ""; // 获取搜索关键字
+
+  const { loading, run: LoadMore } = useRequest(
+    async () => {
+      const data = await getQuestionListService({
+        keyword: searchParams.get(LIST_SEARCH_PARAM_KEY) || "",
+        page,
+        pageSize: LIST_PAGE_SIZE,
+      });
+      return data;
+    },
+    {
+      manual: true,
+      onSuccess: (result) => {
+        const { list: l, total } = result;
+        setList(list.concat(l));
+        setTotal(total);
+      },
+    }
+  );
+
+  const { run: tryLoadMore } = useDebounceFn(
+    () => {
+      const ele = targetRef.current;
+      if (ele == null) return;
+      const rect = ele.getBoundingClientRect();
+      if (rect == null) return;
+      const { bottom } = rect;
+
+      if (bottom <= document.documentElement.clientHeight) {
+        LoadMore();
+        console.log("加载更多...");
+        setStarted(true);
+      }
+    },
+    {
+      wait: 1000,
+    }
+  );
+  // 实现监听: 1.滚动时监听, 搜索关键词变化时候监听
+
+  useEffect(() => {
+    setList([]);
+    setTotal(0);
+    setStarted(false);
+  }, [searchParam]);
+
+  useEffect(() => {
+    tryLoadMore();
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (haveMoreData) {
+      window.addEventListener("scroll", tryLoadMore); // 注意防抖
+    }
+    return () => {
+      window.removeEventListener("scroll", tryLoadMore); // 结束时移除事件, 防止多次调用发生内存泄漏
+    };
+  }, [searchParams, haveMoreData]);
+
+  const LoadMoreContentElem = () => {
+    if (!started || loading) return <Spin />;
+    if(!haveMoreData) return <Empty />;
+    else return <div>加载更多...</div>
+  };
+
   return (
     <>
       <div className={styles.header}>
@@ -149,16 +224,17 @@ const List: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
+        {/* <div style={{ height: "1000px" }}></div> */}
         {/* 问卷列表 */}
-        {/* {list.length > 0 &&
+        {list.length > 0 &&
           list.map((q: any) => {
             const { _id } = q;
             return <QuestionCard key={_id} {...q} />;
-          })} */}
+          })}
       </div>
       <div className={styles.footer}>
         {/* <div ref={containerRef}>{LoadMoreContentElem}</div> */}
-        <div>加载更多</div>
+        <div ref={targetRef}>{LoadMoreContentElem()}</div>
       </div>
     </>
   );
