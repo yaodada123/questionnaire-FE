@@ -18,6 +18,7 @@ import ListSearch from "../../components/ListSearch";
 import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 // import { updateQuestionService, deleteQuestionsService } from '../../services/question'
 import styles from "./common.module.scss";
+import ListPage from "../../components/ListPage";
 
 const { Title } = Typography;
 const { confirm } = Modal;
@@ -187,7 +188,7 @@ const Trash: FC = () => {
         {!loading && list.length === 0 && <Empty description="暂无数据" />}
         {list.length > 0 && TableElem}
       </div>
-      <div className={styles.footer}>{/* <ListPage total={total} /> */}</div>
+      <div className={styles.footer}><ListPage total={total} /></div>
     </>
   );
 };
