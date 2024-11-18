@@ -19,6 +19,7 @@ import useLoadQuestionListData from '../../hooks/useLoadQuestionListData'
 // import { updateQuestionService, deleteQuestionsService } from '../../services/question'
 import styles from "./common.module.scss";
 import ListPage from "../../components/ListPage";
+import { deleteQuestionsService, updateQuestionService } from "../../services/question";
 
 const { Title } = Typography;
 const { confirm } = Modal;
@@ -68,42 +69,42 @@ const Trash: FC = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   // 恢复
-  // const { run: recover } = useRequest(
-  //   async () => {
-  //     for await (const id of selectedIds) {
-  //       await updateQuestionService(id, { isDeleted: false })
-  //     }
-  //   },
-  //   {
-  //     manual: true,
-  //     debounceWait: 500, // 防抖
-  //     onSuccess() {
-  //       message.success('恢复成功')
-  //       refresh() // 手动刷新列表
-  //       setSelectedIds([])
-  //     },
-  //   }
-  // )
+  const { run: recover } = useRequest(
+    async () => {
+      for await (const id of selectedIds) {
+        await updateQuestionService(id, { isDeleted: false })
+      }
+    },
+    {
+      manual: true,
+      debounceWait: 500, // 防抖
+      onSuccess() {
+        message.success('恢复成功')
+        refresh() // 手动刷新列表
+        setSelectedIds([])
+      },
+    }
+  )
 
   // 删除
-  // const { run: deleteQuestion } = useRequest(
-  //   async () => await deleteQuestionsService(selectedIds),
-  //   {
-  //     manual: true,
-  //     onSuccess() {
-  //       message.success('删除成功')
-  //       refresh()
-  //       setSelectedIds([])
-  //     },
-  //   }
-  // )
+  const { run: deleteQuestion } = useRequest(
+    async () => await deleteQuestionsService(selectedIds),
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功')
+        refresh()
+        setSelectedIds([])
+      },
+    }
+  )
 
   function del() {
     confirm({
       title: "确认彻底删除该问卷？",
       icon: <ExclamationCircleOutlined />,
       content: "删除以后不可以找回",
-      // onOk: deleteQuestion,
+      onOk: deleteQuestion,
     });
   }
 
@@ -142,7 +143,7 @@ const Trash: FC = () => {
           <Button
             type="primary"
             disabled={selectedIds.length === 0}
-            // onClick={recover}
+            onClick={recover}
           >
             恢复
           </Button>
