@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRequest } from 'ahooks'
-// import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getQuestionService } from '../services/question'
-// import { resetComponents } from '../store/componentsReducer'
+import { resetComponents } from '../store/componentsReducer'
 // import { resetPageInfo } from '../store/pageInfoReducer'
 
 function useLoadQuestionData() {
   const { id = '' } = useParams()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   // ajax 加载
   const { data, loading, error, run } = useRequest(
@@ -40,9 +40,11 @@ function useLoadQuestionData() {
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id // 默认选中第一个组件
     }
+    // console.log("从后端请求到的数据：", data);
+    
 
     // 把 componentList 存储到 Redux store 中
-    // dispatch(resetComponents({ componentList, selectedId, copiedComponent: null }))
+    dispatch(resetComponents({ componentList, selectedId, copiedComponent: null }))
 
     // 把 pageInfo 存储到 redux store
     // dispatch(resetPageInfo({ title, desc, js, css, isPublished }))

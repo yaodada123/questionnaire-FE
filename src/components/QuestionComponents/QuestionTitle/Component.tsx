@@ -1,15 +1,17 @@
 import React, { FC } from "react";
-import { QuestionTitleProps, QuestionTitleDefaultProps } from "./interface";
+import { QuestionTitlePropsType, QuestionTitleDefaultProps } from "./interface";
 import { Typography } from "antd";
 
 const { Title } = Typography;
 
-const QuestionTitle: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
+const QuestionTitle: FC<QuestionTitlePropsType> = (props: QuestionTitlePropsType) => {
   let {
-    title = "",
+    text = "",
     level = 1,
     isCenter = false,
   } = { ...QuestionTitleDefaultProps, ...props };
+  // console.log("看看传入的标题", props);
+  
   let getFontSize = (level: number) => {
     if ((level = 1)) return 24;
     if ((level = 2)) return 20;
@@ -24,7 +26,7 @@ const QuestionTitle: FC<QuestionTitleProps> = (props: QuestionTitleProps) => {
           marginBottom: 0,
         }}
       >
-        {title}
+        {text}
       </Title>
     </div>
   );
