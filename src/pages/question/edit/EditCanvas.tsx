@@ -9,7 +9,7 @@ import {
   changeSelectedId,
   moveComponent,
 } from "../../../store/componentsReducer";
-// import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
+import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
 // import SortableContainer from '../../../components/DragSortable/SortableContainer'
 // import SortableItem from '../../../components/DragSortable/SortableItem'
 import styles from "./EditCanvas.module.scss";
@@ -48,7 +48,7 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
   }
 
   // 绑定快捷键
-  // useBindCanvasKeyPress()
+  useBindCanvasKeyPress()
 
   if (loading) {
     return (

@@ -26,7 +26,7 @@ const ComponentProp: FC = () => {
 
   const { PropComponent } = componentConf
   // return <PropComponent {...props} onChange={changeProps} disabled={isLocked || isHidden} />
-  return <PropComponent {...props} onChange={changeProps} />
+  return <PropComponent {...props} onChange={changeProps} disabled={isLocked || isHidden} />
   // return <PropComponent {...props}  />
 }
 

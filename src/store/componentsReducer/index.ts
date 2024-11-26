@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import produce from "immer";
-// import cloneDeep from 'lodash.clonedeep'
+import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from "nanoid";
 // import { arrayMove } from '@dnd-kit/sortable'
 import { ComponentPropsType } from "../../components/QuestionComponents";
@@ -75,7 +75,7 @@ export const componentsSlice = createSlice({
       const curComp = state.componentList.find((c) => c.fe_id === fe_id);
       if (curComp) {
         console.log(curComp.props, "props");
-        
+
         curComp.props = {
           ...curComp.props,
           ...newProps,
@@ -83,83 +83,76 @@ export const componentsSlice = createSlice({
       }
     },
     // 删除选中的组件
-    removeSelectedComponent: produce((draft: ComponentsStateType) => {
-      const { componentList = [], selectedId: removedId } = draft;
+    removeSelectedComponent: (state: ComponentsStateType) => {
+      const { componentList = [], selectedId: removedId } = state;
 
       // 重新计算 selectedId
       const newSelectedId = getNextSelectedId(removedId, componentList);
-      draft.selectedId = newSelectedId;
+      state.selectedId = newSelectedId;
 
       const index = componentList.findIndex((c) => c.fe_id === removedId);
       componentList.splice(index, 1);
-    }),
+    },
 
     // 隐藏/显示 组件
-    changeComponentHidden: produce(
-      (
-        draft: ComponentsStateType,
-        action: PayloadAction<{ fe_id: string; isHidden: boolean }>
-      ) => {
-        const { componentList = [] } = draft;
-        const { fe_id, isHidden } = action.payload;
+    changeComponentHidden: (
+      state: ComponentsStateType,
+      action: PayloadAction<{ fe_id: string; isHidden: boolean }>
+    ) => {
+      const { componentList = [] } = state;
+      const { fe_id, isHidden } = action.payload;
 
-        // 重新计算 selectedId
-        let newSelectedId = "";
-        if (isHidden) {
-          // 要隐藏
-          newSelectedId = getNextSelectedId(fe_id, componentList);
-        } else {
-          // 要显示
-          newSelectedId = fe_id;
-        }
-        draft.selectedId = newSelectedId;
-
-        const curComp = componentList.find((c) => c.fe_id === fe_id);
-        if (curComp) {
-          curComp.isHidden = isHidden;
-        }
+      // 重新计算 selectedId
+      let newSelectedId = "";
+      if (isHidden) {
+        // 要隐藏
+        newSelectedId = getNextSelectedId(fe_id, componentList);
+      } else {
+        // 要显示
+        newSelectedId = fe_id;
       }
-    ),
-
+      state.selectedId = newSelectedId;
+      const curComp = componentList.find((c) => c.fe_id === fe_id);
+      if (curComp) {
+        curComp.isHidden = isHidden;
+      }
+    },
     // 锁定/解锁 组件
-    toggleComponentLocked: produce(
-      (
-        draft: ComponentsStateType,
-        action: PayloadAction<{ fe_id: string }>
-      ) => {
-        const { fe_id } = action.payload;
+    toggleComponentLocked: (
+      state: ComponentsStateType,
+      action: PayloadAction<{ fe_id: string }>
+    ) => {
+      const { fe_id } = action.payload;
 
-        const curComp = draft.componentList.find((c) => c.fe_id === fe_id);
-        if (curComp) {
-          curComp.isLocked = !curComp.isLocked;
-        }
+      const curComp = state.componentList.find((c) => c.fe_id === fe_id);
+      if (curComp) {
+        curComp.isLocked = !curComp.isLocked;
       }
-    ),
-
+    },
     // 拷贝当前选中的组件
-    copySelectedComponent: produce((draft: ComponentsStateType) => {
-      const { selectedId, componentList = [] } = draft;
+    copySelectedComponent: (state: ComponentsStateType) => {
+      const { selectedId, componentList = [] } = state;
       const selectedComponent = componentList.find(
         (c) => c.fe_id === selectedId
       );
       if (selectedComponent == null) return;
-      // draft.copiedComponent = cloneDeep(selectedComponent) // 深拷贝
-    }),
+      state.copiedComponent = cloneDeep(selectedComponent) // 深拷贝
+    },
 
     // 粘贴组件
-    pasteCopiedComponent: produce((draft: ComponentsStateType) => {
+    pasteCopiedComponent: (draft: ComponentsStateType) => {
       const { copiedComponent } = draft;
       if (copiedComponent == null) return;
 
       // 要把 fe_id 给修改了，重要！！
-      // copiedComponent.fe_id = nanoid()
+      copiedComponent.fe_id = nanoid()
 
       // 插入 copiedComponent
       insertNewComponent(draft, copiedComponent);
-    }),
+    },
 
     // 选中上一个
-    selectPrevComponent: produce((draft: ComponentsStateType) => {
+    selectPrevComponent: (draft: ComponentsStateType) => {
       const { selectedId, componentList } = draft;
       const selectedIndex = componentList.findIndex(
         (c) => c.fe_id === selectedId
@@ -169,10 +162,10 @@ export const componentsSlice = createSlice({
       if (selectedIndex <= 0) return; // 已经选中了第一个，无法在向上选中
 
       draft.selectedId = componentList[selectedIndex - 1].fe_id;
-    }),
+    },
 
     // 选中下一个
-    selectNextComponent: produce((draft: ComponentsStateType) => {
+    selectNextComponent: (draft: ComponentsStateType) => {
       const { selectedId, componentList } = draft;
       const selectedIndex = componentList.findIndex(
         (c) => c.fe_id === selectedId
@@ -182,7 +175,7 @@ export const componentsSlice = createSlice({
       if (selectedIndex + 1 === componentList.length) return; // 已经选中了最后一个，无法再向下选中
 
       draft.selectedId = componentList[selectedIndex + 1].fe_id;
-    }),
+    },
 
     // 修改组件标题
     changeComponentTitle: produce(
