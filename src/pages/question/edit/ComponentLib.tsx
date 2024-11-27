@@ -23,12 +23,12 @@ function GetComponent(c: ComponentConfType) {
         type,
         props: defaultProps,
       })
-    )
-  }, [])
+    );
+  }, []);
 
   return (
     <div key={type} className={styles.wrapper} onClick={handleClick}>
-    {/* <div key={type} className={styles.wrapper}> */}
+      {/* <div key={type} className={styles.wrapper}> */}
       <div className={styles.component}>
         <Component />
       </div>
@@ -46,11 +46,14 @@ const Lib: FC = () => {
           <div key={groupId}>
             <Title
               level={3}
-              style={{ fontSize: "16px", marginTop: index > 0 ? "20px" : "0" }}
+              style={{
+                fontSize: "16px",
+                marginTop: index > 0 ? "20px" : "0",
+              }}
             >
               {groupName}
             </Title>
-            <div>{components.map(c => GetComponent(c))}</div>
+            <div>{components.map((c) => GetComponent(c))}</div>
           </div>
         );
       })}
