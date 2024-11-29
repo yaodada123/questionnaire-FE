@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks'
 import { useDispatch } from 'react-redux'
 import { getQuestionService } from '../services/question'
 import { resetComponents } from '../store/componentsReducer'
-// import { resetPageInfo } from '../store/pageInfoReducer'
+import { resetPageInfo } from '../store/pageInfoReducer'
 
 function useLoadQuestionData() {
   const { id = '' } = useParams()
@@ -47,7 +47,7 @@ function useLoadQuestionData() {
     dispatch(resetComponents({ componentList, selectedId, copiedComponent: null }))
 
     // 把 pageInfo 存储到 redux store
-    // dispatch(resetPageInfo({ title, desc, js, css, isPublished }))
+    dispatch(resetPageInfo({ title, desc, js, css, isPublished }))
   }, [data])
 
   // 判断 id 变化，执行 ajax 加载问卷数据

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { Tabs } from 'antd'
 import { FileTextOutlined, SettingOutlined } from '@ant-design/icons'
 import ComponentProp from './ComponentProp'
-// import PageSetting from './PageSetting'
+import PageSetting from './PageSetting'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 
 // TS 枚举
@@ -39,8 +39,8 @@ const RightPanel: FC = () => {
           页面设置
         </span>
       ),
-      children: <div>页面设置</div>,
-      // children: <PageSetting />,
+      // children: <div>页面设置</div>,
+      children: <PageSetting />,
     },
   ]
 

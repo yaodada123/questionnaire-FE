@@ -8,7 +8,7 @@ export type StateType = {
   user: UserStateType
   components: ComponentsStateType
   // components: StateWithHistory<ComponentsStateType> // 增加了 undo
-  // pageInfo: PageInfoType
+  pageInfo: PageInfoType
 } 
 
 export default configureStore({

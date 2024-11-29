@@ -5,7 +5,7 @@ import { Button, Typography, Space, Input, message } from 'antd'
 import { LeftOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useRequest, useKeyPress, useDebounceEffect } from 'ahooks'
 import EditToolbar from './EditToolbar'
-// import useGetPageInfo from '../../../hooks/useGetPageInfo'
+import useGetPageInfo from '../../../hooks/useGetPageInfo'
 import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 import { changePageTitle } from '../../../store/pageInfoReducer'
 import { updateQuestionService } from '../../../services/question'
@@ -15,7 +15,7 @@ const { Title } = Typography
 
 // 显示和修改标题
 const TitleElem: FC = () => {
-  // const { title } = useGetPageInfo()
+  const { title } = useGetPageInfo()
   const dispatch = useDispatch()
 
   const [editState, SetEditState] = useState(false)
@@ -29,7 +29,7 @@ const TitleElem: FC = () => {
   if (editState) {
     return (
       <Input
-        // value={title}
+        value={title}
         onChange={handleChange}
         onPressEnter={() => SetEditState(false)}
         onBlur={() => SetEditState(false)}
@@ -39,7 +39,7 @@ const TitleElem: FC = () => {
 
   return (
     <Space>
-      {/* <Title>{title}</Title> */}
+      <Title>{title}</Title>
       <Button icon={<EditOutlined />} type="text" onClick={() => SetEditState(true)} />
     </Space>
   )
@@ -49,12 +49,12 @@ const TitleElem: FC = () => {
 const SaveButton: FC = () => {
   const { id } = useParams()
   const { componentList = [] } = useGetComponentInfo()
-  // const pageInfo = useGetPageInfo()
+  const pageInfo = useGetPageInfo()
 
   const { loading, run: save } = useRequest(
     async () => {
       if (!id) return
-      // await updateQuestionService(id, { ...pageInfo, componentList })
+      await updateQuestionService(id, { ...pageInfo, componentList })
       await updateQuestionService(id, { componentList })
     },
     { manual: true }
@@ -71,18 +71,18 @@ const SaveButton: FC = () => {
     () => {
       save()
     },
-    // [componentList, pageInfo],
-    [componentList],
+    [componentList, pageInfo],
+    // [componentList],
     {
       wait: 1000,
     }
   )
 
   return (
-    // <Button onClick={save} disabled={loading} icon={loading ? <LoadingOutlined /> : null}>
-    //   保存
-    // </Button>
-    <div></div>
+    <Button onClick={save} disabled={loading} icon={loading ? <LoadingOutlined /> : null}>
+      保存
+    </Button>
+    // <div></div>
   )
 }
 
@@ -91,13 +91,13 @@ const PublishButton: FC = () => {
   const nav = useNavigate()
   const { id } = useParams()
   const { componentList = [] } = useGetComponentInfo()
-  // const pageInfo = useGetPageInfo()
+  const pageInfo = useGetPageInfo()
 
   const { loading, run: pub } = useRequest(
     async () => {
       if (!id) return
       await updateQuestionService(id, {
-        // ...pageInfo,
+        ...pageInfo,
         componentList,
         isPublished: true, // 标志着问卷已经被发布
       })

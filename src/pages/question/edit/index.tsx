@@ -7,12 +7,15 @@ import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import EditHeader from "./EditHeader";
+import { changeSelectedId } from "../../../store/componentsReducer";
+import { useDispatch } from "react-redux";
 
 const Edit: FC = () => {
   const { id = "" } = useParams();
   // const [loading, setLoading] = useState(false);
   const [questionData, setQuestionData] = useState({});
   const { loading } = useLoadQuestionData();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     async function fn() {
@@ -23,9 +26,12 @@ const Edit: FC = () => {
     }
     fn();
   }, []);
-  // return <>Edit
-  //   {loading ? "loading.,," : JSON.stringify(questionData)}
-  // </>;
+  function clearSelectedId() {
+    dispatch(changeSelectedId(''))
+    // console.log("sss");
+    
+  }
+
   return (
     <div className={styles.container}>
       {/* <div style={{ backgroundColor: "#fff" }}></div> */}
@@ -35,7 +41,7 @@ const Edit: FC = () => {
           <div className={styles.left}>
             <LeftPanel />
           </div>
-          <div className={styles.main}>
+          <div className={styles.main} onClick={clearSelectedId}>
             <div className={styles["canvas-wrapper"]}>
               {/* <div style={{ height: "900px" }}>画布滚动测试</div> */}
               <EditCanvas loading={loading}></EditCanvas>
@@ -51,3 +57,7 @@ const Edit: FC = () => {
 };
 
 export default Edit;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+
