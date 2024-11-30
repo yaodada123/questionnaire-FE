@@ -5,8 +5,8 @@ import { ComponentsStateType } from '../store/componentsReducer'
 function useGetComponentInfo() {
   // redux store
   const components = useSelector<StateType>(
-    // state => state.components.present
-    state => state.components
+    state => state.components.present
+    // state => state.components
   ) as ComponentsStateType
   // console.log("从redux中取出数据", components);
   

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import produce from "immer";
 import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from "nanoid";
-// import { arrayMove } from '@dnd-kit/sortable'
+import { arrayMove } from '@dnd-kit/sortable'
 import { ComponentPropsType } from "../../components/QuestionComponents";
 import { getNextSelectedId, insertNewComponent } from "./utils";
 
@@ -190,17 +190,17 @@ export const componentsSlice = createSlice({
     ),
 
     // 移动组件位置
-    moveComponent: produce(
+    moveComponent: 
       (
-        draft: ComponentsStateType,
+        state: ComponentsStateType,
         action: PayloadAction<{ oldIndex: number; newIndex: number }>
       ) => {
-        const { componentList: curComponentList } = draft;
+        const { componentList: curComponentList } = state;
         const { oldIndex, newIndex } = action.payload;
 
-        // draft.componentList = arrayMove(curComponentList, oldIndex, newIndex)
+        state.componentList = arrayMove(curComponentList, oldIndex, newIndex)
       }
-    ),
+    ,
   },
 });
 

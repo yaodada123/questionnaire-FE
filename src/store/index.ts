@@ -6,8 +6,8 @@ import pageInfoReducer, { PageInfoType } from './pageInfoReducer'
 
 export type StateType = {
   user: UserStateType
-  components: ComponentsStateType
-  // components: StateWithHistory<ComponentsStateType> // 增加了 undo
+  // components: ComponentsStateType
+  components: StateWithHistory<ComponentsStateType> // 增加了 undo
   pageInfo: PageInfoType
 } 
 
@@ -16,18 +16,18 @@ export default configureStore({
     user: userReducer,
 
     // // 没有 undo
-    components: componentsReducer,
+    // components: componentsReducer,
 
     // 增加了 undo
-    // components: undoable(componentsReducer, {
-    //   limit: 20, // 限制 undo 20 步
-    //   filter: excludeAction([
-    //     'components/resetComponents',
-    //     'components/changeSelectedId',
-    //     'components/selectPrevComponent',
-    //     'components/selectNextComponent',
-    //   ]),
-    // }),
+    components: undoable(componentsReducer, {
+      limit: 20, // 限制 undo 20 步
+      filter: excludeAction([
+        'components/resetComponents',
+        'components/changeSelectedId',
+        'components/selectPrevComponent',
+        'components/selectNextComponent',
+      ]),
+    }),
 
     pageInfo: pageInfoReducer,
   },
