@@ -23,7 +23,7 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionCheckboxPropsType;
 
 // 统一，各个组件的统计属性类型
-// type ComponentStatPropsType = QuestionRadioStatPropsType & QuestionCheckboxStatPropsType
+type ComponentStatPropsType = QuestionRadioStatPropsType & QuestionCheckboxStatPropsType
 
 // 统一，组件的配置 type
 export type ComponentConfType = {
@@ -32,7 +32,7 @@ export type ComponentConfType = {
   Component: FC<ComponentPropsType>;
   PropComponent: FC<ComponentPropsType>
   defaultProps: ComponentPropsType;
-  // StatComponent?: FC<ComponentStatPropsType>
+  StatComponent?: FC<ComponentStatPropsType>
 };
 
 // 全部的组件配置的列表

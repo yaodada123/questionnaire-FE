@@ -16,5 +16,5 @@ export default {
   Component,
   PropComponent,
   defaultProps: QuestionRadioDefaultProps,
-  // StatComponent,
+  StatComponent,
 }
