@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import Component from './Component'
 
 test('默认属性', () => {
-  render(<Component />)
+  render(<Component />) // 渲染组件
 
   const p = screen.getByText('多选标题')
   expect(p).toBeInTheDocument()
