@@ -1,13 +1,3 @@
-// import React, { FC } from "react";
-
-// const QuestionCard: FC = () => {
-//   return (
-//     <></>
-//   )
-// }
-
-// export default QuestionCard;
-
 import React, { FC, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Space, Divider, Tag, Popconfirm, Modal, message } from "antd";

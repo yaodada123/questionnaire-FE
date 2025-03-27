@@ -15,41 +15,6 @@ import styles from "./common.module.scss";
 
 const { Title } = Typography;
 
-const rawquestionList = [
-  {
-    _id: "q1",
-    title: "问卷1",
-    isPublished: false,
-    isStar: false,
-    answerCount: 3,
-    createAt: "3月11日 12:23",
-  },
-  {
-    _id: "q2",
-    title: "问卷2",
-    isPublished: true,
-    isStar: false,
-    answerCount: 4,
-    createAt: "3月1日 18:03",
-  },
-  {
-    _id: "q3",
-    title: "问卷3",
-    isPublished: false,
-    isStar: false,
-    answerCount: 38,
-    createAt: "3月13日 14:23",
-  },
-  {
-    _id: "q4",
-    title: "问卷4",
-    isPublished: true,
-    isStar: false,
-    answerCount: 89,
-    createAt: "3月21日 12:23",
-  },
-];
-
 const List: FC = () => {
   useTitle("小慕问卷 - 我的问卷");
 
@@ -138,7 +103,7 @@ const List: FC = () => {
   //   return <span>开始加载下一页</span>
   // }, [started, loading, haveMoreData])
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([]); 
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [started, setStarted] = useState(false);
