@@ -1,5 +1,4 @@
 import axios, { ResDataType } from './ajax'
-// import type { ResDataType } from './ajax'
 
 type SearchOption = {
   keyword: string
@@ -13,7 +12,6 @@ type SearchOption = {
 export async function getQuestionService(id: string): Promise<ResDataType> {
   const url = `/api/question/${id}`
   const data = (await axios.get(url)) as ResDataType
-  // console.log(data, '------');
   
   return data
 }

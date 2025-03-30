@@ -3,7 +3,7 @@ import { message } from 'antd'
 import { getToken } from '../utils/user-token'
 
 const instance = axios.create({
-  timeout: 10 * 1000,
+  timeout: 10 * 1000, //设置请求等待时间
 })
 
 // request 拦截：每次请求都带上 token
@@ -34,12 +34,14 @@ instance.interceptors.response.use(res => {
 
 export default instance
 
+// 设置结果类型
 export type ResType = {
   errno: number
   data?: ResDataType
   msg?: string
 }
 
+// 对象只要是字符串的键即可
 export type ResDataType = {
   [key: string]: any
 }

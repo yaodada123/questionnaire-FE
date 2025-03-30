@@ -19,10 +19,8 @@ const Edit: FC = () => {
 
   useEffect(() => {
     async function fn() {
-      // setLoading(true);
       const data = await getQuestionService(id);
       setQuestionData(data);
-      // setLoading(false);
     }
     fn();
   }, []);

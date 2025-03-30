@@ -4,8 +4,6 @@ import { Button, Typography } from 'antd'
 import { MANAGE_INDEX_PATHNAME } from '../router'
 import styles from './Home.module.scss'
 
-// import axios from 'axios'
-// import '../_mock/index.ts'
 
 const { Title, Paragraph } = Typography
 
