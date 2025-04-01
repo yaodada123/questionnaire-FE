@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - REACT_APP_API_URL=https://api.example.com
+    container_name: questionnaire-fe-container
