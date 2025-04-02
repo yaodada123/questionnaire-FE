@@ -95,13 +95,6 @@ const List: FC = () => {
   //   }
   // }, [searchParams, haveMoreData])
 
-  // LoadMore Elem
-  // const LoadMoreContentElem = useMemo(() => {
-  //   if (!started || loading) return <Spin />
-  //   if (total === 0) return <Empty description="暂无数据" />
-  //   if (!haveMoreData) return <span>没有更多了...</span>
-  //   return <span>开始加载下一页</span>
-  // }, [started, loading, haveMoreData])
 
   const [list, setList] = useState([]); 
   const [page, setPage] = useState(1);
@@ -114,6 +107,8 @@ const List: FC = () => {
   let haveMoreData = total > list.length;
   let searchParam = searchParams.get(LIST_SEARCH_PARAM_KEY) || ""; // 获取搜索关键字
 
+
+  // 数据请求模拟分页url得到的数据，然后拼接到list中
   const { loading, run: LoadMore } = useRequest(
     async () => {
       const data = await getQuestionListService({
@@ -133,6 +128,7 @@ const List: FC = () => {
     }
   );
 
+  // 尝试去触发加载 - 防抖
   const { run: tryLoadMore } = useDebounceFn(
     () => {
       const ele = targetRef.current;

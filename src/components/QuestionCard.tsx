@@ -45,16 +45,13 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
     }
   )
 
-  // 复制
-  // const duplicate = () => {
-  //   message.success("复制成功")
-  // }
+
+  // 复制向后端发起请求返回的类型和创建返回的类型是一样的
   const { loading: duplicateLoading, run: duplicate } = useRequest(
   async () => {
     const data = await duplicateQuestionService(_id)
     return data // 返回的数据，后面onsuccess中的result正确接收
   },
-  // async () => await duplicateQuestionService(_id),
   {
     manual: true,
     onSuccess(result) {
