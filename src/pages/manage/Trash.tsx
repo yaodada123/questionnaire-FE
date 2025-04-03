@@ -68,7 +68,7 @@ const Trash: FC = () => {
   // 记录选中的 id
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  // 恢复
+  // 恢复 删除的标记字段设置为 false
   const { run: recover } = useRequest(
     async () => {
       for await (const id of selectedIds) {

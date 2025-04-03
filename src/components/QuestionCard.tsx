@@ -61,7 +61,7 @@ const QuestionCard: FC<PropsType> = (props: PropsType) => {
   }
   )
 
-  // 删除
+  // 删除问卷 算是一个逻辑删除，更改对应的标记字段
   const [isDeletedState, setIsDeletedState] = useState(false);
   const { loading: deleteLoading, run: deleteQuestion } = useRequest(
     async () => await updateQuestionService(_id, { isDeleted: true }),
