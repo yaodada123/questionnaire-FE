@@ -12,6 +12,8 @@ export type StateType = {
 } 
 
 export default configureStore({
+  // 总共是 user + components + pageInfo三个reducer,
+  // 分别实现登录，组件更改，和 页面信息编辑的操作
   reducer: {
     user: userReducer,
 
