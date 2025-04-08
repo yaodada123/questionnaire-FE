@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* 引入 store */}
+    {/* 引入 store redux */}
     <Provider store={store}> 
       <App />
     </Provider>

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import undoable, { excludeAction, StateWithHistory } from 'redux-undo'
-import userReducer, { UserStateType } from './userReducer'
+import userReducer, { UserStateType } from './userReducer' // 引入用户reducer
 import componentsReducer, { ComponentsStateType } from './componentsReducer'
 import pageInfoReducer, { PageInfoType } from './pageInfoReducer'
 

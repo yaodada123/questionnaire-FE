@@ -7,6 +7,7 @@ export type UserStateType = {
 
 const INIT_STATE: UserStateType = { username: '', nickname: '' }
 
+// 存储用户相关信息
 export const userSlice = createSlice({
   name: 'user',
   initialState: INIT_STATE,
@@ -15,7 +16,7 @@ export const userSlice = createSlice({
       return action.payload // 设置 username nickname 到 redux store
       // 用不到 immer
     },
-    logoutReducer: () => INIT_STATE,
+    logoutReducer: () => INIT_STATE, // 清空 redux store
   },
 })
 
