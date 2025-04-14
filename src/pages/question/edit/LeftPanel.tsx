@@ -25,7 +25,6 @@ const LeftPanel: FC = () => {
         </span>
       ),
       children: <Layers />,
-      // children: <div>图层</div>
     },
   ]
 

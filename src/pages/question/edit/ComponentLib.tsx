@@ -43,7 +43,7 @@ const Lib: FC = () => {
         const { groupId, groupName, components } = group;
 
         return (
-          <div key={groupId}>
+          <div key={groupId} >
             <Title
               level={3}
               style={{
@@ -53,7 +53,7 @@ const Lib: FC = () => {
             >
               {groupName}
             </Title>
-            <div>{components.map((c) => GetComponent(c))}</div>
+            <div >{components.map((c) => GetComponent(c))}</div>
           </div>
         );
       })}
