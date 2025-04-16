@@ -2,6 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 import { getToken } from '../utils/user-token'
 
+
 const instance = axios.create({
   timeout: 10 * 1000, //设置请求等待时间
 })

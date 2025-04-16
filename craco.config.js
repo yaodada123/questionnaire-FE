@@ -33,6 +33,16 @@ module.exports = {
 
   devServer: {
     port: 8000, // B 端，前端
+    setupMiddlewares: (middlewares, devServer) => {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      // 你可以在这里添加自定义中间件
+      // middlewares.push(yourCustomMiddleware);
+
+      return middlewares;
+    },
     proxy: {
       '/api': 'http://localhost:3001', // Mock
     },
