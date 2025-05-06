@@ -28,4 +28,4 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           working-directory: ./
-          run: vercel --prod --token $VERCEL_TOKEN --yes
+          run: vercel --prod --token $VERCEL-TOKEN --yes
