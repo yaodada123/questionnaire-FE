@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, startTransition } from "react";
 import { useParams } from "react-router-dom";
 import { getQuestionService } from "../../../services/question";
 import styles from "./index.module.scss";
@@ -22,7 +22,9 @@ const Edit: FC = () => {
       const data = await getQuestionService(id);
       setQuestionData(data);
     }
-    fn();
+    // startTransition(() => {
+      fn();
+    // })
   }, []);
   function clearSelectedId() {
     dispatch(changeSelectedId(''))
